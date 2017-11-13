@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <p id="location_text">test</p>
+    <p>Are you feeling adventurous enough to start sharing your location with random strangers on this network? click the button below!</p>
+    <div id="uploadbtn" class="btn">start sending location</div>
+    <div hidden="true" id="hidden_stuff">
+        <img id="logo" src="wifi_logo.png"/>
+        <p >your location is now being send to the database</p>
+        <div id="stopbtn" class="btn">stop sending</div>
+    </div>
+    <script>
+        var sending = false;
+        $(document).ready(function() {
+            $(".btn").mouseenter(function () {
+                $(this).fadeTo('fast', 1);
+            });
+            $(".btn").mouseleave(function () {
+                $(this).fadeTo('fast', 0.5);
+            });
+            $('#uploadbtn').click(function() {
+                sending = true;
+                $(this).fadeOut('slow', function () {
+                    $('#hidden_stuff').fadeIn('slow');
+                });
+            });
+            $('#stopbtn').click(function() {
+                sending = false;
+                $('#hidden_stuff').fadeOut('slow', function () {
+                    $('#uploadbtn').fadeIn('slow');
+                });
+            });
+        });
+
+        setInterval(function () {
+            console.log("hostname = " + window.location.hostname);
+            if(sending == true) {
+                console.log("f:interval");
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(storeLocation);
+                } else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+        }, 10000);
+
+        function storeLocation(position) {
+            console.log("f:storeLocation");
+            var url = "http://" + window.location.hostname + "/test.php?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
+            var oReq = new XMLHttpRequest();
+            oReq.open("get", url, true);
+            oReq.send();
+        }
+    </script>
+</body>

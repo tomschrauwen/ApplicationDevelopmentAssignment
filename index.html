@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+</head>
+<body>
+    <img id="logo" src="/map_image.png">
+    <p id="homepagetext">select what you want to do!</p>
+    <div id="map_btn"  href="javascript:void(0)" class="btn">view uploaded locations</div>
+    <div id="location_btn"  href="javascript:void(0)" class="btn">upload your own location for other people to see</div>
+
+    <script>
+        $(document).ready(function () {
+            $(".btn").mouseenter(function () {
+                $(this).fadeTo('fast', 1);
+            });
+            $(".btn").mouseleave(function () {
+                $(this).fadeTo('fast', 0.5);
+            });
+            $("#location_btn").click(function () {
+                location.href = "/locationpage.html";
+            });
+            $("#map_btn").click(function () {
+                location.href = "/mappage.php";
+            });
+        });
+
+
+    </script>
+</body>
+</html>
